@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Reemplaza tu AndroidManifest.xml por este (o copia los cambios).
+  Cambios importantes:
+   - android:banner="@drawable/banner"  -> el ícono que Fire TV muestra en la pantalla de inicio
+   - android:largeHeap="true"           -> más memoria disponible en Fire Sticks con poca RAM
+   - android:theme explícito            -> no depende de tu themes.xml
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SET_WALLPAPER" />
+
+    <uses-feature android:name="android.software.leanback" android:required="false" />
+    <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+
+    <application
+        android:allowBackup="true"
+        android:label="Fire Wallpapers"
+        android:icon="@mipmap/ic_launcher"
+        android:banner="@drawable/banner"
+        android:largeHeap="true"
+        android:theme="@android:style/Theme.Material.NoActionBar">
+
+        <!-- Pantalla de ajustes / vista previa -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:banner="@drawable/banner"
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Protector de pantalla (lo que el sistema lanza al quedar inactivo) -->
+        <service
+            android:name=".WallpaperDreamService"
+            android:exported="true"
+            android:label="Fire Wallpapers"
+            android:permission="android.permission.BIND_DREAM_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.dreams.DreamService" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+
+    </application>
+</manifest>
